@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\enumVar as enum;
 use App\Http\Controllers\BaseController as BaseController;
 use App\Models\Murid;
+use Illuminate\Support\Facades\Auth;
 
 class MuridController extends BaseController
 {
@@ -29,8 +30,7 @@ class MuridController extends BaseController
      */
     public function index(Request $request)
     {
-
-        //  $user = auth('sanctum')->user();
+        $user = auth('sanctum')->user();
         //  dd($user->grup);
          Log::channel('mibedil')->info('Halaman '.$this->page);
          $murid = [];
@@ -65,6 +65,9 @@ class MuridController extends BaseController
                          // })
                          ->select('tbmurid.*')
                          ->where('tbmurid.dlt', '0')
+                         ->where(function($query) use ($user){
+                            if($user->grup != 1) $query->where('tbmurid.kodemurid', '=', $user->login);
+                        })
                          ->where(function ($query) use ($level, $status, $search) {
                                  if (!is_null($level) && $level != '') $query->where('tbmurid.level', $level);
                                  if (!is_null($status) && $status != '') $query->where('tbmurid.status', $status);
@@ -95,9 +98,10 @@ class MuridController extends BaseController
              'murid.index', 
              [
                  'page' => $this->page, 
-                 'createbutton' => true, 
+                 'createbutton' => Auth::user()->isSekolah() ? false : true, 
                  'createurl' => route('murid.create'), 
                  'murid' => $murid, 
+                 'isSekolah' => Auth::user()->isSekolah()
              ]);
     }
 

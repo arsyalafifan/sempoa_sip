@@ -218,7 +218,7 @@ use App\enumVar as enum;
                         {{ __('Simpan') }}
                     </button>
                     <a href="{{ route('murid.index') }}" class="btn btn-primary waves-effect waves-light m-r-10">
-                        {{ __('Index murid') }}
+                        {{ __('Kembali') }}
                     </a>
                     {{-- <a href="{{ route('home') }}" class="btn btn-dark waves-effect waves-light m-r-10">
                     {{ __('Home') }}

@@ -30,6 +30,7 @@ class PembayaranController extends BaseController
     public function index(Request $request)
     {
 
+        $user = auth('sanctum')->user();
         $this->authorize('view-39');
         Log::channel('mibedil')->info('Halaman '.$this->page);
         $pembayaran = [];
@@ -54,6 +55,9 @@ class PembayaranController extends BaseController
                         })
                         ->select('tbpembayaran.*', 'tbmurid.namamurid')
                         ->where('tbpembayaran.dlt', '0')
+                        ->where(function($query) use ($user){
+                            if($user->grup != 1) $query->where('tbmurid.kodemurid', '=', $user->login);
+                        })
                         ->where(function ($query) use ($search, $pembayaran, $status) {
                                 if (!is_null($pembayaran) && $pembayaran != '') $query->where('tbpembayaran.category', $pembayaran);
                                 if (!is_null($status) && $status != '') $query->where('tbpembayaran.status', $status);
@@ -83,7 +87,7 @@ class PembayaranController extends BaseController
             'pembayaran.index', 
             [
                 'page' => $this->page, 
-                'createbutton' => false, 
+                'createbutton' => true, 
                 'createurl' => route('pembayaran.create'), 
                 'pembayaran' => $pembayaran, 
                 'isSekolah' => Auth::user()->isSekolah()
@@ -99,9 +103,13 @@ class PembayaranController extends BaseController
     {
         $this->authorize('add-39');
         Log::channel('mibedil')->info('Halaman Tambah '.$this->page);
+        $user = auth('sanctum')->user();
         $murid = DB::table('tbmurid')
         ->select('tbmurid.muridid', 'tbmurid.namamurid', 'tbmurid.kodemurid')
         ->where('tbmurid.dlt', 0)
+        ->where(function($query) use ($user){
+            if($user->grup != 1) $query->where('tbmurid.kodemurid', '=', $user->login);
+        })
         ->orderBy('tbmurid.muridid')
         ->get();
         return view(
@@ -144,7 +152,7 @@ class PembayaranController extends BaseController
 
             DB::commit();
 
-            return redirect()->route('murid.index')
+            return redirect()->route('pembayaran.index')
             ->with('success', 'Data murid berhasil ditambah.', ['page' => $this->page]);
         }catch (\Throwable $th) {
             return response(['error' => $th->getMessage()], 500);
@@ -172,12 +180,16 @@ class PembayaranController extends BaseController
     {
         $this->authorize('edit-39');
         Log::channel('mibedil')->info('Halaman Ubah '.$this->page);
+        $user = auth('sanctum')->user();
 
         $pembayaran = Pembayaran::where('pembayaranid', $id)->firstOrFail();
 
         $murid = DB::table('tbmurid')
         ->select('tbmurid.muridid', 'tbmurid.kodemurid', 'tbmurid.namamurid')
         ->where('tbmurid.dlt', 0)
+        ->where(function($query) use ($user){
+            if($user->grup != 1) $query->where('tbmurid.kodemurid', '=', $user->login);
+        })
         ->orderBy('tbmurid.kodemurid')
         ->get();
 
@@ -202,43 +214,34 @@ class PembayaranController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        // $this->authorize('add-25');
+        $this->authorize('add-25');
 
-        // try{
-        //     $user = auth('sanctum')->user();
+        try{
+            $user = auth('sanctum')->user();
 
-        //     $model = Guru::where('guruid', $id)
-        //     ->where('dlt', 0)
-        //     ->first();
+            $model = Pembayaran::where('pembayaranid', $id)
+            ->where('dlt', 0)
+            ->first();
 
-        //     DB::beginTransaction();
-        //     $tahun = Date('Y');
-        //     $model->kodeguru = $request->kodeguru;
-        //     $model->tgllahir = $request->tgllahir;
-        //     $model->namaguru = $request->namaguru;
-        //     $model->namapanggilan = $request->namapanggilan;
-        //     $model->jeniskelamin = $request->jeniskelamin;
-        //     $model->alamat = $request->alamat;
-        //     $model->tempatlahir = $request->tempatlahir;
-        //     $model->agama = $request->agama;
-        //     $model->tgllahir = $request->tgllahir;
-        //     $model->notelp = $request->notelp;
-        //     $model->pendidikan = $request->pendidikan;
-        //     $model->email = $request->email;
-        //     $model->level = $request->level;
-        //     $model->status = $request->status;
+            DB::beginTransaction();
+            $tahun = Date('Y');
+            $model->kodepembayaran = $request->kodepembayaran;
+            $model->muridid = $request->muridid;
+            $model->category = $request->category;
+            $model->tglbayar = $request->tglbayar;
+            $model->status = $request->status;
 
-        //     $model->fill(['opedit' => $user->login, 'pcedit' => $request->ip()]);
+            $model->fill(['opedit' => $user->login, 'pcedit' => $request->ip()]);
 
-        //     $model->save();
+            $model->save();
 
-        //     DB::commit();
+            DB::commit();
 
-        //     return redirect()->route('guru.index')
-        //     ->with('success', 'Data guru berhasil diubah.', ['page' => $this->page]);
-        // }catch (\Throwable $th) {
-        //     return response(['error' => $th->getMessage()], 500);
-        // }
+            return redirect()->route('pembayaran.index')
+            ->with('success', 'pembayaran berhasil diubah.', ['page' => $this->page]);
+        }catch (\Throwable $th) {
+            return response(['error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -247,9 +250,37 @@ class PembayaranController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $this->authorize('delete-39');
+
+        $user = auth('sanctum')->user();
+        $tglnow = date('Y-m-d');
+
+        try {
+            DB::beginTransaction();
+
+            $pembayaran = Pembayaran::find($id);
+
+            $pembayaran->dlt = '1';
+            $pembayaran->fill(['opedit' => $user->login, 'pcedit' => $request->ip()]);
+
+            $pembayaran->save();
+
+            DB::commit();
+
+            return response([
+                'success' => true,
+                'data'    => 'Success',
+                'message' => 'pembayaran deleted successfully.',
+            ], 200);
+
+        } catch (QueryException $e) {
+            return $this->sendError('SQL Error', $this->getQueryError($e));
+        }
+        catch (Exception $e) {
+            return $this->sendError('Error', $e->getMessage());
+        }
     }
 
     public function showbuktipembayaran(Request $request, $id) 
@@ -310,7 +341,7 @@ class PembayaranController extends BaseController
 
             if ($request->hasFile('file')) {
                 $fileName = $tglnow.'_'.rand(1,1000).'_'.$request->file('file')->getClientOriginalName();   
-                $filePath = $request->file('file')->storeAs('storage/uploaded/buktipembayaran', $fileName);   
+                $filePath = $request->file('file')->storeAs('public/uploaded/buktipembayaran', $fileName);   
                 $model->buktipembayaran = $fileName;
                 $model->pembayaranid = $request->pembayaranid;
             }

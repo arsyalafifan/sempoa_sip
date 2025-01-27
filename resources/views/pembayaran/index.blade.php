@@ -197,7 +197,7 @@ use App\enumVar as enum;
             },
             buttons: {
                 buttons: [
-                    @if(!$isSekolah) // Jika isSekolah == false, tambahkan tombol
+                     // Jika isSekolah == false, tambahkan tombol
                     {
 
                         text: '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Ubah',
@@ -218,8 +218,7 @@ use App\enumVar as enum;
                             window.location = url;
                         }
                     },
-                    @endif 
-                    @if(!$isSekolah)
+                    @if($isSekolah)
                     {
                         text: '<i class="fa fa-trash" aria-hidden="true"></i> Hapus',
                         className: 'edit btn btn-danger btn-sm btn-datatable',
@@ -233,14 +232,14 @@ use App\enumVar as enum;
                             }
                             var id = pembayarantable.rows({
                                 selected: true
-                            }).data()[0]['guruid'];
-                            var url = "{{ route('guru.destroy', ':id') }}"
+                            }).data()[0]['pembayaranid'];
+                            var url = "{{ route('pembayaran.destroy', ':id') }}"
                             url = url.replace(':id', id);
                             var nama = pembayarantable.rows({
                                 selected: true
-                            }).data()[0]['nama'];
+                            }).data()[0]['kodepembayaran'];
                             swal.fire({
-                                title: "Apakah anda yakin akan menghapus guru " +
+                                title: "Apakah anda yakin akan menghapus pembayaran " +
                                     nama + "?",
                                 text: "Data yang terhapus tidak dapat dikembalikan lagi!",
                                 type: "warning",
@@ -401,7 +400,7 @@ use App\enumVar as enum;
 
             buttons: {
                 buttons: [
-                @if(!$isSekolah) // Jika isSekolah == false, tambahkan tombol
+                @if($isSekolah) // Jika isSekolah == false, tambahkan tombol
                     {
                         text: '<i class="fa fa-plus-circle aria-hidden="true"></i> Tambah',
                         id: 'btn-tambah-detail-peg',
@@ -426,7 +425,7 @@ use App\enumVar as enum;
                         }
                     },
                 @endif
-                @if(!$isSekolah)
+                @if($isSekolah)
                     {
                         text: '<i class="fa fa-trash" aria-hidden="true"></i> Hapus',
                         id: 'btn-hapus-detail-peg',

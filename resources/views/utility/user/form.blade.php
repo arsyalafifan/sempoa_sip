@@ -69,44 +69,6 @@ use App\enumVar as enum;
                         </div>
 
                         <div class="form-group row">
-                            <label for="sekolahid" class="col-md-12 col-form-label text-md-left">{{ __('Sekolah') }}</label>
-
-                            <div class="col-md-12">
-                                <select id="sekolahid" class="custom-select form-control @error('sekolahid') is-invalid @enderror" name='sekolahid' autofocus disabled>
-                                    <option value="">-- Pilih sekolah --</option>
-                                    @foreach ($sekolah as $item)
-                                    <option @if (old("sekolahid", $user->sekolahid)==$item->sekolahid) selected @endif value="{{$item->sekolahid}}">{{ $item->npsn . ' ' . $item->namasekolah }}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('sekolahid')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="perusahaanid" class="col-md-12 col-form-label text-md-left">{{ __('Perusahaan') }}</label>
-
-                            <div class="col-md-12">
-                                <select id="perusahaanid" class="custom-select form-control @error('perusahaanid') is-invalid @enderror" name='perusahaanid' autofocus disabled>
-                                    <option value="">-- Pilih perusahaan --</option>
-                                    @foreach ($perusahaan as $item)
-                                    <option @if (old("perusahaanid", $user->perusahaanid)==$item->perusahaanid) selected @endif value="{{$item->perusahaanid}}">{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('perusahaanid')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="nama" class="col-md-12 col-form-label text-md-left">{{ __('Nama Lengkap *') }}</label>
 
                             <div class="col-md-12">
@@ -185,7 +147,7 @@ use App\enumVar as enum;
                                 </button>
                                  @endif
                                 <a href="{{ route('user.index') }}" class="btn btn-primary waves-effect waves-light m-r-10">
-                                    {{ __('Index User') }}
+                                    {{ __('Kembali') }}
                                 </a>
                                 {{-- <a href="{{ route('home') }}" class="btn btn-dark waves-effect waves-light m-r-10">
                                     {{ __('Home') }}

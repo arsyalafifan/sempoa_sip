@@ -137,7 +137,7 @@ class GuruController extends BaseController
             DB::beginTransaction();
             $tahun = Date('Y');
             $model->kodeguru = $request->kodeguru;
-            $model->tgllahir = $request->tgllahir;
+            $model->tglmasuk = $request->tglmasuk;
             $model->namaguru = $request->namaguru;
             $model->namapanggilan = $request->namapanggilan;
             $model->jeniskelamin = $request->jeniskelamin;
@@ -221,7 +221,7 @@ class GuruController extends BaseController
             DB::beginTransaction();
             $tahun = Date('Y');
             $model->kodeguru = $request->kodeguru;
-            $model->tgllahir = $request->tgllahir;
+            $model->tglmasuk = $request->tglmasuk;
             $model->namaguru = $request->namaguru;
             $model->namapanggilan = $request->namapanggilan;
             $model->jeniskelamin = $request->jeniskelamin;

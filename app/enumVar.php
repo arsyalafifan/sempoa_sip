@@ -1309,30 +1309,22 @@ class enumVar {
         );
     }
 
-    const STATUS_GURU_QUALIFIED = 1;
-    const STATUS_GURU_NONQUALIFIED = 2;
-    const STATUS_GURU_NONACTIVE = 3;
-    const STATUS_GURU_RESIGN = 4;
+    const STATUS_GURU_ACTIVE = 1;
+    const STATUS_GURU_RESIGN = 2;
 
-    const STATUS_GURU_DESC_QUALIFIED = 'Qualified';
-    const STATUS_GURU_DESC_NONQUALIFIED = 'Non Qualified';
-    const STATUS_GURU_DESC_NONACTIVE = 'Non Active';
+    const STATUS_GURU_DESC_ACTIVE = 'Active';
     const STATUS_GURU_DESC_RESIGN = 'Resign';
 
     public function listStatusGuru($name="id") {
         if ($name=="id")
             return array(
-                self::STATUS_GURU_QUALIFIED, 
-                self::STATUS_GURU_NONQUALIFIED, 
-                self::STATUS_GURU_NONACTIVE,
-                self::STATUS_GURU_RESIGN,
+                self::STATUS_GURU_ACTIVE, 
+                self::STATUS_GURU_RESIGN, 
             );
         else
         return array(
-            self::STATUS_GURU_DESC_QUALIFIED, 
-            self::STATUS_GURU_DESC_NONQUALIFIED, 
-            self::STATUS_GURU_DESC_NONACTIVE,
-            self::STATUS_GURU_DESC_RESIGN,
+            self::STATUS_GURU_DESC_ACTIVE, 
+            self::STATUS_GURU_DESC_RESIGN, 
         );
     }
 

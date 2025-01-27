@@ -90,6 +90,17 @@ use App\enumVar as enum;
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label for="status">Status*</label>
+                        <select id="status" class="col-md-12 custom-select form-control" name="status" autofocus
+                            required>
+
+                            <option value="0" {{ $pembayaran->status != null && $pembayaran->status == $id ? "selected" : "" }}>Pending</option>
+                            <option value="1" {{ $pembayaran->status != null && $pembayaran->status == $id ? "selected" : "" }}>Terverivikasi</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group row mb-0">
@@ -97,7 +108,7 @@ use App\enumVar as enum;
                         {{ __('Simpan') }}
                     </button>
                     <a href="{{ route('pembayaran.index') }}" class="btn btn-primary waves-effect waves-light m-r-10">
-                        {{ __('Index Pembayaran') }}
+                        {{ __('Kembali') }}
                     </a>
                     {{-- <a href="{{ route('home') }}" class="btn btn-dark waves-effect waves-light m-r-10">
                     {{ __('Home') }}
