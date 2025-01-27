@@ -90,13 +90,24 @@ use App\enumVar as enum;
                     </div>
                 </div>
             </div>
+            <!-- <div class="col-md-4">
+                    <div class="form-group row">
+                        <label for="status">Status*</label>
+                        <select id="status" class="col-md-12 custom-select form-control" name="status" autofocus
+                            required>
+
+                            <option value="0">Pending</option>
+                            <option value="1">Terverivikasi</option>
+                        </select>
+                    </div>
+                </div> -->
             <div class="col-md-12 mt-2">
                 <div class="form-group row mb-0">
                     <button type="submit" class="btn btn-info waves-effect waves-light m-r-10">
                         {{ __('Simpan') }}
                     </button>
                     <a href="{{ route('pembayaran.index') }}" class="btn btn-primary waves-effect waves-light m-r-10">
-                        {{ __('Index pembayaran') }}
+                        {{ __('Kembali') }}
                     </a>
                 </div>
             </div>

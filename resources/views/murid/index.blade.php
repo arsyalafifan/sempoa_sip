@@ -360,7 +360,9 @@ use App\enumVar as enum;
                 }
             },
             buttons: {
-                buttons: [{
+                buttons: [
+                    @if(!$isSekolah) // Jika isSekolah == false, tambahkan tombol
+                    {
 
                         text: '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Ubah',
                         className: 'edit btn btn-warning btn-sm btn-datatable',
@@ -379,7 +381,10 @@ use App\enumVar as enum;
                             url = url.replace(':id', id);
                             window.location = url;
                         }
-                    }, {
+                    },
+                    @endif 
+                    @if(!$isSekolah) // Jika isSekolah == false, tambahkan tombol
+                    {
                         text: '<i class="fa fa-trash" aria-hidden="true"></i> Hapus',
                         className: 'edit btn btn-danger btn-sm btn-datatable',
                         action: function () {
@@ -450,6 +455,7 @@ use App\enumVar as enum;
                             });
                         }
                     }
+                    @endif
                 ]
             },
             columns: [

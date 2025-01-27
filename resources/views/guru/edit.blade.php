@@ -45,10 +45,10 @@ use App\enumVar as enum;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group row">
-                        <label for="tgllahir" class="col-md-12 col-form-label text-md-left">{{ __('Tanggal Lahir *') }}</label>
+                        <label for="tglmasuk" class="col-md-12 col-form-label text-md-left">{{ __('Tanggal Masuk *') }}</label>
                         <div class="col-md-12">
-                            <input type="date" class="form-control @error('tgllahir') is-invalid @enderror" id="tgllahir" name="tgllahir" value="{{ old('tgllahir') ?? $guru->tgllahir }}" required>
-                            @error('tgllahir')
+                            <input type="date" class="form-control @error('tglmasuk') is-invalid @enderror" id="tglmasuk" name="tglmasuk" value="{{ old('tglmasuk') ?? $guru->tglmasuk }}" required>
+                            @error('tglmasuk')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -220,7 +220,7 @@ use App\enumVar as enum;
                         {{ __('Simpan') }}
                     </button>
                     <a href="{{ route('guru.index') }}" class="btn btn-primary waves-effect waves-light m-r-10">
-                        {{ __('Index guru') }}
+                        {{ __('Kembali') }}
                     </a>
                     {{-- <a href="{{ route('home') }}" class="btn btn-dark waves-effect waves-light m-r-10">
                     {{ __('Home') }}

@@ -100,7 +100,7 @@ use App\enumVar as enum;
                 <div class="col-md-12">
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <div class="row">
+                            <div class="row hidden">
                                 <label for="akseskode" class="col-md-12 col-form-label text-md-left">{{ __('Kode *') }}</label>
                                 {{-- <div class="col-md-12">
                                     <input id="akseskode" type="text" class="form-control @error('akseskode') is-invalid @enderror" name="akseskode" value="{{ old('akseskode', isset($akses->akseskode) ? $akses->akseskode : '') }}" maxlength="10" required>
@@ -119,8 +119,8 @@ use App\enumVar as enum;
                                     <span class="invalid-feedback" role="alert" id="errakseskode"></span>
                                 </div> --}}
                             </div>
-                            <div class="row">
-                                <label for="grup" class="col-md-12 col-form-label text-md-left">{{ __('Grup') }}</label>
+                            <div class="row hidden">
+                                <label for="grup" class="col-md-12 col-form-label text-md-left hidden">{{ __('Grup') }}</label>
                                 <div class="col-md-12">
                                     <select id="grup" class="col-md-12 custom-select form-control" name='grup' autofocus {{ $akses->exists ? 'disabled' : '' }}>
                                         <option value="">-- Hak Akses --</option>
@@ -230,7 +230,7 @@ use App\enumVar as enum;
                         {{ __('Simpan') }}
                     </button>
                     <a href="{{ route('akses.index') }}" class="btn btn-primary waves-effect waves-light m-r-10">
-                        {{ __('Index Hak Akses') }}
+                        {{ __('Kembali') }}
                     </a>
                     {{-- <a href="{{ route('home') }}" class="btn btn-dark waves-effect waves-light m-r-10">
                         {{ __('Home') }}

@@ -16,7 +16,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="mapel">Mata Pelajaran</label>
+            <label for="mapel">Tipe Soal</label>
             <input type="text" name="mapel" id="mapel" class="form-control" required>
         </div>
         <div class="form-group">
@@ -28,7 +28,7 @@
             <input type="date" name="tanggal" id="tanggal" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="keterangan">Keterangan</label>
+            <label for="keterangan">Catatan</label>
             <input type="text" name="keterangan" id="keterangan" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Simpan Nilai</button>
@@ -43,10 +43,12 @@
                 <table class="table table-bordered yajra-datatable table-striped" id="nilai-table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nama Murid</th>
-                            <th>Mata Pelajaran</th>
+                            <th>Tipe Soal</th>
+                            <th>Nilai</th>
                             <th>Tanggal</th>
-                            <th>Keterangan</th>
+                            <th>Catatan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,7 +133,7 @@
                                                 swal.fire("Berhasil!", "Data anda telah dihapus.", "success"); 
                                                 var rowData = nilaitable.rows({ selected: true }).data()[0]; // Get selected row data
                                                 var nilaiid = rowData.nilaiid;
-                                                loadnilai(nilaiid);
+                                                loadnilai();
                                             } else {
                                                 swal.fire("Error!", data, "error"); 
                                             }
@@ -146,22 +148,32 @@
             },
 
             columns: [
-                {'orderData': 1, data: 'namamurid', name: 'namamurid', 
+                {'orderData': 1, data: 'nilaiid', name: 'nilaiid', 
+                    render: function(data, type, row){
+                        return row.nilaiid;
+                    }
+                },
+                {'orderData': 2, data: 'namamurid', name: 'namamurid', 
                     render: function(data, type, row){
                         return row.namamurid;
                     }
                 },
-                {'orderData': 2, data: 'mapel', name: 'mapel', 
+                {'orderData': 3, data: 'mapel', name: 'mapel', 
                     render: function(data, type, row){
                         return row.mapel;
                     }
                 },
-                {'orderData': 3, data: 'tanggal', name: 'tanggal', 
+                {'orderData': 4, data: 'nilai', name: 'nilai', 
+                    render: function(data, type, row){
+                        return row.nilai;
+                    }
+                },
+                {'orderData': 5, data: 'tanggal', name: 'tanggal', 
                     render: function(data, type, row){
                         return row.tanggal;
                     }
                 },
-                {'orderData': 4, data: 'keterangan', name: 'keterangan', 
+                {'orderData': 6, data: 'keterangan', name: 'keterangan', 
                     render: function(data, type, row){
                         return row.keterangan;
                     }
@@ -188,6 +200,7 @@
                         nilaitable.row.add({
                             nilaiid: response.data.data[i].nilaiid,
                             namamurid: response.data.data[i].namamurid,
+                            nilai: response.data.data[i].nilai,
                             mapel: response.data.data[i].mapel,
                             tanggal: response.data.data[i].tanggal,
                             keterangan: response.data.data[i].keterangan
