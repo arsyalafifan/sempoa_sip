@@ -44,6 +44,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Kode Murid</th>
                             <th>Nama Murid</th>
                             <th>Tipe Soal</th>
                             <th>Nilai</th>
@@ -153,27 +154,32 @@
                         return row.nilaiid;
                     }
                 },
-                {'orderData': 2, data: 'namamurid', name: 'namamurid', 
+                {'orderData': 2, data: 'kodemurid', name: 'kodemurid', 
+                    render: function(data, type, row){
+                        return row.kodemurid;
+                    }
+                },
+                {'orderData': 3, data: 'namamurid', name: 'namamurid', 
                     render: function(data, type, row){
                         return row.namamurid;
                     }
                 },
-                {'orderData': 3, data: 'mapel', name: 'mapel', 
+                {'orderData': 4, data: 'mapel', name: 'mapel', 
                     render: function(data, type, row){
                         return row.mapel;
                     }
                 },
-                {'orderData': 4, data: 'nilai', name: 'nilai', 
+                {'orderData': 5, data: 'nilai', name: 'nilai', 
                     render: function(data, type, row){
                         return row.nilai;
                     }
                 },
-                {'orderData': 5, data: 'tanggal', name: 'tanggal', 
+                {'orderData': 6, data: 'tanggal', name: 'tanggal', 
                     render: function(data, type, row){
                         return row.tanggal;
                     }
                 },
-                {'orderData': 6, data: 'keterangan', name: 'keterangan', 
+                {'orderData': 7, data: 'keterangan', name: 'keterangan', 
                     render: function(data, type, row){
                         return row.keterangan;
                     }
@@ -199,6 +205,7 @@
                     for (var i = 0; i < response.data.count; i++) {
                         nilaitable.row.add({
                             nilaiid: response.data.data[i].nilaiid,
+                            kodemurid: response.data.data[i].kodemurid,
                             namamurid: response.data.data[i].namamurid,
                             nilai: response.data.data[i].nilai,
                             mapel: response.data.data[i].mapel,

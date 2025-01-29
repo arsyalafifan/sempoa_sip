@@ -32,7 +32,7 @@ class NilaiController extends BaseController
         $this->authorize('view-38');
         $user = auth('sanctum')->user();
         $nilai = DB::table('tbnilai')
-        ->select('tbnilai.*', 'tbmurid.muridid', 'tbmurid.namamurid')
+        ->select('tbnilai.*', 'tbmurid.muridid', 'tbmurid.namamurid', 'tbmurid.kodemurid')
         ->join('tbmurid', function($join) {
             $join->on('tbmurid.muridid', '=', 'tbnilai.muridid');
             $join->on('tbmurid.dlt','=',DB::raw("'0'"));
@@ -127,7 +127,7 @@ class NilaiController extends BaseController
 
             try {
                 $nilai = DB::table('tbnilai')
-                    ->select('tbnilai.*', 'tbmurid.muridid', 'tbmurid.namamurid')
+                    ->select('tbnilai.*', 'tbmurid.muridid', 'tbmurid.namamurid', 'tbmurid.kodemurid')
                     ->join('tbmurid', function($join) {
                         $join->on('tbmurid.muridid', '=', 'tbnilai.muridid');
                         $join->on('tbmurid.dlt','=',DB::raw("'0'"));
